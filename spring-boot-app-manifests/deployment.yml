@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: spring-boot-app
-          image: rooaws/myapp:replaceImageTag
+          image: rooaws/myapp:4
           ports:
             - containerPort: 8080
           env:
