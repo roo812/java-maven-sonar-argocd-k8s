@@ -19,3 +19,8 @@ spec:
           image: rooaws/myapp:replaceImageTag
           ports:
             - containerPort: 8080
+          env:
+            - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
+              value: "health,info,prometheus"
+            - name: MANAGEMENT_ENDPOINT_PROMETHEUS_ENABLED
+              value: "true"
