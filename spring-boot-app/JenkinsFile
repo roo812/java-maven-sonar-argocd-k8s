@@ -1,10 +1,11 @@
 pipeline {
-  agent {
-    docker {
-      image 'abhishekf5/maven-abhishek-docker-agent:v1' // using the existing public image that has docker and maven
-      args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
-    }
-  }
+  // agent {
+  //   docker {
+  //     image 'abhishekf5/maven-abhishek-docker-agent:v1' // using the existing public image that has docker and maven
+  //     args '--user root -v /var/run/docker.sock:/var/run/docker.sock' // mount Docker socket to access the host's Docker daemon
+  //   }
+  // }
+  agent any
   stages {
     stage('Checkout') {
       steps {
@@ -20,12 +21,12 @@ pipeline {
       }
     }
     stage('Static Code Analysis') {
-      agent {
-        docker {
-          image 'maven:3.8.6-openjdk-17' // Java 17 for SonarQube
-          args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
-        }
-      }
+      // agent {
+      //   docker {
+      //     image 'maven:3.8.6-openjdk-17' // Java 17 for SonarQube
+      //     args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
+      //   }
+      // }
       environment {
         SONAR_URL = "http://54.90.254.175:9000"
       }
