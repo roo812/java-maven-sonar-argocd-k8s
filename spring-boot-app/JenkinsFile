@@ -20,12 +20,18 @@ pipeline {
       }
     }
     stage('Static Code Analysis') {
+      agent {
+        docker {
+          image 'maven:3.8.6-openjdk-17' // Java 17 for SonarQube
+          args '--user root -v /var/run/docker.sock:/var/run/docker.sock'
+        }
+      }
       environment {
         SONAR_URL = "http://54.90.254.175:9000"
       }
       steps {
         withCredentials([string(credentialsId: 'sonarqube', variable: 'SONAR_AUTH_TOKEN')]) {
-          sh 'cd spring-boot-app && mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL}'
+          sh 'cd spring-boot-app && mvn sonar:sonar -Dsonar.login=$SONAR_AUTH_TOKEN -Dsonar.host.url=${SONAR_URL} -Dsonar.java.binaries=target/classes'
         }
       }
     }
